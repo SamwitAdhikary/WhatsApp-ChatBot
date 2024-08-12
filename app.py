@@ -311,19 +311,28 @@ def sms():
             quote = 'Sorry I am unable to retrive quote at this time, try later.'
         msg.body(quote)
     
-    #-->feature which asking question randomly
+    #-->feature which asking Python interview preparation questions
     elif '#trivia' in incoming_msg:
         trivia_questions = [
-            {"question": "What is the capital of France?", "answer": "Paris"},
-            {"question": "Who wrote 'To Kill a Mockingbird'?", "answer": "Harper Lee"},
-            {"question": "What is the smallest planet in our solar system?", "answer": "Mercury"},
-            {"question": "Which element has the chemical symbol 'O'?", "answer": "Oxygen"},
-            {"question": "What year did the Titanic sink?", "answer": "1912"}
+            {"question": "What is the difference between `deepcopy` and `shallowcopy` in Python?"},
+            {"question": "Explain the difference between `list` and `tuple` in Python."},
+            {"question": "What is a lambda function in Python, and when would you use it?"},
+            {"question": "How does Python's garbage collection work?"},
+            {"question": "What is the purpose of the `self` keyword in Python classes?"},
+            {"question": "How do you handle exceptions in Python?"},
+            {"question": "What is the Global Interpreter Lock (GIL) in Python?"},
+            {"question": "Explain the use of decorators in Python with an example."},
+            {"question": "What are Python generators, and how do they differ from iterators?"},
+            {"question": "What are list comprehensions in Python, and why are they useful?"},
+            {"question": "Explain the difference between `__init__` and `__new__` in Python classes."},
+            {"question": "How do you implement method overloading in Python?"},
+            {"question": "What are metaclasses in Python, and how do they work?"},
+            {"question": "What is the difference between `==` and `is` in Python?"},
+            {"question": "How would you reverse a string in Python?"}
         ]
         # Select a random trivia question
         trivia = random.choice(trivia_questions)
         question = trivia["question"]
-        answer = trivia["answer"]
         # Send the trivia question
         msg.body(f"Trivia Question: {question}")
 
