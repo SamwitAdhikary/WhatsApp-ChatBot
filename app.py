@@ -3,6 +3,12 @@ import requests
 from twilio.twiml.messaging_response import MessagingResponse
 import wikipediaapi
 import randfacts
+import random
+from flask import Flask, request, jsonify, Response
+
+
+# List of trivia questions and answers
+
 
 app = Flask(__name__)
 
@@ -304,12 +310,30 @@ def sms():
         else:
             quote = 'Sorry I am unable to retrive quote at this time, try later.'
         msg.body(quote)
+    
+    #-->feature which asking question randomly
+    elif '#trivia' in incoming_msg:
+        trivia_questions = [
+            {"question": "What is the capital of France?", "answer": "Paris"},
+            {"question": "Who wrote 'To Kill a Mockingbird'?", "answer": "Harper Lee"},
+            {"question": "What is the smallest planet in our solar system?", "answer": "Mercury"},
+            {"question": "Which element has the chemical symbol 'O'?", "answer": "Oxygen"},
+            {"question": "What year did the Titanic sink?", "answer": "1912"}
+        ]
+        # Select a random trivia question
+        trivia = random.choice(trivia_questions)
+        question = trivia["question"]
+        answer = trivia["answer"]
+        # Send the trivia question
+        msg.body(f"Trivia Question: {question}")
 
+
+    
     else:
         msg.body("Sorry.. I didn't get that..\nTry *#about* ")
 
     return str(resp)
-
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
