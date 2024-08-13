@@ -3,6 +3,12 @@ import requests
 from twilio.twiml.messaging_response import MessagingResponse
 import wikipediaapi
 import randfacts
+import random
+from flask import Flask, request, jsonify, Response
+
+
+# List of trivia questions and answers
+
 
 app = Flask(__name__)
 
@@ -304,12 +310,39 @@ def sms():
         else:
             quote = 'Sorry I am unable to retrive quote at this time, try later.'
         msg.body(quote)
+    
+    #-->feature which asking Python interview preparation questions
+    elif '#trivia' in incoming_msg:
+        trivia_questions = [
+            {"question": "What is the difference between `deepcopy` and `shallowcopy` in Python?"},
+            {"question": "Explain the difference between `list` and `tuple` in Python."},
+            {"question": "What is a lambda function in Python, and when would you use it?"},
+            {"question": "How does Python's garbage collection work?"},
+            {"question": "What is the purpose of the `self` keyword in Python classes?"},
+            {"question": "How do you handle exceptions in Python?"},
+            {"question": "What is the Global Interpreter Lock (GIL) in Python?"},
+            {"question": "Explain the use of decorators in Python with an example."},
+            {"question": "What are Python generators, and how do they differ from iterators?"},
+            {"question": "What are list comprehensions in Python, and why are they useful?"},
+            {"question": "Explain the difference between `__init__` and `__new__` in Python classes."},
+            {"question": "How do you implement method overloading in Python?"},
+            {"question": "What are metaclasses in Python, and how do they work?"},
+            {"question": "What is the difference between `==` and `is` in Python?"},
+            {"question": "How would you reverse a string in Python?"}
+        ]
+        # Select a random trivia question
+        trivia = random.choice(trivia_questions)
+        question = trivia["question"]
+        # Send the trivia question
+        msg.body(f"Trivia Question: {question}")
 
+
+    
     else:
         msg.body("Sorry.. I didn't get that..\nTry *#about* ")
 
     return str(resp)
-
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
